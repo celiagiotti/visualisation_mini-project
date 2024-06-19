@@ -1,5 +1,6 @@
-# visualisation_mini-project
-Repository for the "Baby Names" mini project
+# Baby Names Mini Project - Visualisation IGR204
+
+This is the repository for the "Baby Names" mini project.
 
 Members of the project group : 
 - Laurent GAYRAUD (MS Big Data)
