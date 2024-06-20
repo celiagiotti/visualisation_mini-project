@@ -28,7 +28,7 @@ Here are the different steps:
 - Recover the entire Git repository
 - Install all the necessary libraries in a specific environment using requirements.txt
 - Run in the terminal **"python3 visualisation_1.py" or "python3 visualisation_2.py" or "python3 visualisation_3.py"**
-- A command message will be sent to the terminal for viewing with Streamlit: **"streamlit run visualisation_1.py" or "streamlit run visualisation_2.py" or "streamlit run visualisation_3.py"** (A web page with the graphs will open: then it's your turn to play!)
+- A command message will be sent to the terminal for viewing with Streamlit, so run in the terminal: **"streamlit run visualisation_1.py" or "streamlit run visualisation_2.py" or "streamlit run visualisation_3.py"** (A web page with the graphs will open: then it's your turn to play!)
 
 Just to remind you, here are the objectives and guidelines for the mini-projects: 
 
