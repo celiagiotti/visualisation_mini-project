@@ -15,7 +15,20 @@ To do this project, we used Python and coded our visualisations with Altair (htt
 - visualisation_2.py
 - visualisation_3.py
 
+This 3 files of code contain all the code for all the visualisations required for the project.
+
+**You have other files which are data files:**
+- departements-avec-outre-mer.geojson
+- departements-version-simplifiee.geojson
+- dpt2020.csv
+
 To view the various visualisations, you will need to create an environment that allows you to run the python scripts from your terminal. Once you have done this, your terminal will issue a command to launch the visualisation interface via Streamlit and open a web page so that you can play with the visualisations.
+
+Here are the different steps: 
+- Recover the entire Git repository
+- Install all the necessary libraries in a specific environment using requirements.txt
+- Run in the terminal **"python3 visualisation_1.py" or "python3 visualisation_2.py" or "python3 visualisation_3.py"**
+- A command message will be sent to the terminal for viewing with Streamlit: **"streamlit run visualisation_1.py" or "streamlit run visualisation_2.py" or "streamlit run visualisation_3.py"** (A web page with the graphs will open: then it's your turn to play!)
 
 Just to remind you, here are the objectives and guidelines for the mini-projects: 
 
@@ -26,4 +39,6 @@ In this mini-project, we will be working with a data set of baby names in France
 - **Visualization 3:** Are there gender effects in the data? Does popularity of names given to both sexes evolve consistently? (Note: this data set treats sex as binary; this is a simplification that carries into this assignment but does not generally hold.)
 
 This assignment consists of several parts: in the first part, you will sketch design alternatives for different visualizations that can help address each set of questions. In the second part, you will implement that visualization using one of the tools from the class lab assignments. In the third part, you will refine these solutions.
+
+
 
