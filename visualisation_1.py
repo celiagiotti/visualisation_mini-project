@@ -10,12 +10,15 @@ names = pd.read_csv("dpt2020.csv", sep=";")
 names.drop(names[names.preusuel == '_PRENOMS_RARES'].index, inplace=True)
 names.drop(names[names.dpt == 'XX'].index, inplace=True)
 
-# Create a range of years from 1900 to 2020 (the minimum and maximum years in the dataset)
+# Streamlit app
+st.title('Visualisation 1 : Baby names')
+
+# Create a range of years from 1900 to 2020
 names['annais'] = names['annais'].astype(int)
 year_range = np.arange(1900, 2021, 1)
 
-# Select the range using a slider (for the visualisation in Streamlit)
-st.markdown("<b><small>Select a range of years</small></b>",
+# Select the range using a slider
+st.markdown("<b><small>Sélectionner une période</small></b>",
             unsafe_allow_html=True)
 start_year, end_year = st.select_slider(
     "Year Range Slider", options=year_range, value=(1900, 2020), label_visibility="collapsed")
@@ -70,7 +73,8 @@ if not filtered_names.empty:
         baseline='middle',
         dx=-3
     ).encode(
-        text='preusuel:N'
+        text='preusuel:N',
+        color=alt.value('white')
     )
 
     top_males_numbers = top_males_chart.mark_text(
@@ -87,7 +91,7 @@ if not filtered_names.empty:
         x=alt.X('nombre:Q', title='', axis=alt.Axis(labels=True, format='~s')),
         y=alt.Y('preusuel:N', title='', sort=None, axis=alt.Axis(
             orient='right', labels=False, ticks=False)),
-        color=alt.value('violet'),
+        color=alt.value('pink'),
         tooltip=['preusuel', 'nombre', 'gender']
     ).properties(
         width=300,
@@ -99,14 +103,15 @@ if not filtered_names.empty:
         baseline='middle',
         dx=3
     ).encode(
-        text='preusuel:N'
+        text='preusuel:N',
+        color=alt.value('white')
     )
 
     top_females_numbers = top_females_chart.mark_text(
         align='right',
         baseline='middle',
         dx=-3,
-        color='violet'
+        color='pink'
     ).encode(
         text='nombre:Q'
     )
@@ -117,7 +122,7 @@ if not filtered_names.empty:
     ).resolve_scale(
         x='independent'
     ).properties(
-        title='Top 20 Male and Female Names'
+        title='Top 20 des prénoms masculins et féminins les plus populaires'
     ).configure_axis(
         labelFontSize=12,
         titleFontSize=14
@@ -140,7 +145,8 @@ if not filtered_names.empty:
         baseline='middle',
         dx=-3
     ).encode(
-        text='preusuel:N'
+        text='preusuel:N',
+        color=alt.value('white')
     )
 
     least_males_numbers = least_males_chart.mark_text(
@@ -157,7 +163,7 @@ if not filtered_names.empty:
         x=alt.X('nombre:Q', title='', axis=alt.Axis(labels=True, format='~s')),
         y=alt.Y('preusuel:N', title='', sort=None, axis=alt.Axis(
             orient='right', labels=False, ticks=False)),
-        color=alt.value('violet'),
+        color=alt.value('pink'),
         tooltip=['preusuel', 'nombre', 'gender']
     ).properties(
         width=300,
@@ -169,14 +175,15 @@ if not filtered_names.empty:
         baseline='middle',
         dx=3
     ).encode(
-        text='preusuel:N'
+        text='preusuel:N',
+        color=alt.value('white')
     )
 
     least_females_numbers = least_females_chart.mark_text(
         align='right',
         baseline='middle',
         dx=-3,
-        color='violet'
+        color='pink'
     ).encode(
         text='nombre:Q'
     )
@@ -187,7 +194,7 @@ if not filtered_names.empty:
     ).resolve_scale(
         x='independent'
     ).properties(
-        title='Least 20 Male and Female Names'
+        title='Top 20 des prénoms masculins et féminins les moins populaires'
     ).configure_axis(
         labelFontSize=12,
         titleFontSize=14
@@ -198,7 +205,7 @@ if not filtered_names.empty:
 
     # Select a name for the popularity chart in the right column
     with col2:
-        st.markdown("<b><small>Select a name</small></b>",
+        st.markdown("<b><small>Sélectionner un prénom</small></b>",
                     unsafe_allow_html=True)
         name_selected = st.selectbox(
             "Name Select Box", aggregated_names['preusuel'].unique(), label_visibility="collapsed")
@@ -218,12 +225,12 @@ if not filtered_names.empty:
 
     # Create the popularity over time chart
     popularity_chart = alt.Chart(name_rank_data).mark_line(point=alt.OverlayMarkDef(color='orange'), color='orange').encode(
-        x=alt.X('annais:O', title='Year', axis=alt.Axis(format='d')),
-        y=alt.Y('rank:Q', title='Rank', scale=alt.Scale(
+        x=alt.X('annais:O', title='Année', axis=alt.Axis(format='d')),
+        y=alt.Y('rank:Q', title='Rang', scale=alt.Scale(
             domain=(0, name_rank_data['rank'].max() + 1))),
         tooltip=['annais', 'rank']
     ).properties(
-        title=f'Popularity of {name_selected} over time',
+        title=f"Popularité du prénom : '{name_selected}' au cours des années",
         width=600,
         height=400
     )
@@ -238,7 +245,7 @@ if not filtered_names.empty:
     )
 
     popularity_combined_chart = (popularity_chart + popularity_text).properties(
-        title=f'Popularity of {name_selected} over time'
+        title=f"Popularité du prénom : {name_selected} au cours des années"
     )
 
     # Display the charts side by side in Streamlit
