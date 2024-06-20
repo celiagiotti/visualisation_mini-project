@@ -15,7 +15,7 @@ To do this project, we used Python and coded our visualisations with Altair (htt
 - visualisation_2.py
 - visualisation_3.py
 
-This 3 files of code contain all the code for all the visualisations required for the project.
+This 3 files contain all the code for all the visualisations required for the project.
 
 **You have other files which are data files:**
 - departements-avec-outre-mer.geojson
