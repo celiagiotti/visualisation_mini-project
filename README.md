@@ -2,7 +2,7 @@
 
 This is the repository for the "Baby Names" mini project.
 
-Members of the project group: 
+**Members of the project group:**  
 - Laurent GAYRAUD (MS Big Data)
 - Alban PEREIRA (MS Big Data)
 - Guillaume PIOL (MS Big Data)
@@ -24,13 +24,13 @@ This 3 files contain all the code for all the visualisations required for the pr
 
 To view the various visualisations, you will need to create an environment that allows you to run the python scripts from your terminal. Once you have done this, your terminal will issue a command to launch the visualisation interface via Streamlit and open a web page so that you can play with the visualisations.
 
-Here are the different steps: 
+**Here are the different steps:**  
 - Recover the entire Git repository
 - Install all the necessary libraries in a specific environment using requirements.txt
 - Run in the terminal **"python3 visualisation_1.py" or "python3 visualisation_2.py" or "python3 visualisation_3.py"**
 - A command message will be sent to the terminal for viewing with Streamlit, so run in the terminal: **"streamlit run visualisation_1.py" or "streamlit run visualisation_2.py" or "streamlit run visualisation_3.py"** (A web page with the graphs will open: then it's your turn to play!)
 
-Just to remind you, here are the objectives and guidelines for the mini-projects: 
+**Just to remind you, here are the objectives and guidelines for the mini-projects:** 
 
 In this mini-project, we will be working with a data set of baby names in France. It contains the list of all baby names registered in France, year by year, from 1900 through 2020. There are two data sets: one aggregated to the national level, and another with data by department. Your goal is to create 3 different visualizations around these data, each focussed on answering different kinds of questions about the data:
 
