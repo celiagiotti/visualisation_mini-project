@@ -17,9 +17,10 @@ To do this project, we used Python and coded our visualisations with Altair (htt
 
 This 3 files contain all the code for all the visualisations required for the project.
 
-**You have other files which are data files:**
+**You have a folder named "data" with different files which are data files:**
 - departements-avec-outre-mer.geojson
 - departements-version-simplifiee.geojson
+- departements-region.csv
 - dpt2020.csv
 
 To view the various visualisations, you will need to create an environment that allows you to run the python scripts from your terminal. Once you have done this, your terminal will issue a command to launch the visualisation interface via Streamlit and open a web page so that you can play with the visualisations.
