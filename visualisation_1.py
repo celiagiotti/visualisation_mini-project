@@ -21,7 +21,8 @@ year_range = np.arange(1900, 2021, 1)
 st.markdown("<b><small>Sélectionner une période</small></b>",
             unsafe_allow_html=True)
 start_year, end_year = st.select_slider(
-    "Year Range Slider", options=year_range, value=(1900, 2020), label_visibility="collapsed")
+    "Year Range Slider", options=year_range, value=(1900, 2020), label_visibility="collapsed"
+)
 
 filtered_names = names[(names['annais'] >= start_year)
                        & (names['annais'] <= end_year)]
@@ -62,7 +63,8 @@ if not filtered_names.empty:
         y=alt.Y('preusuel:N', title='', sort=None, axis=alt.Axis(
             orient='left', labels=False, ticks=False)),
         color=alt.value('blue'),
-        tooltip=['preusuel', 'nombre', 'gender']
+        tooltip=[alt.Tooltip('preusuel:N', title='prenom'), alt.Tooltip(
+            'nombre:Q', title='nombre'), alt.Tooltip('gender:N', title='sexe')]
     ).properties(
         width=300,
         height=400
@@ -92,7 +94,8 @@ if not filtered_names.empty:
         y=alt.Y('preusuel:N', title='', sort=None, axis=alt.Axis(
             orient='right', labels=False, ticks=False)),
         color=alt.value('pink'),
-        tooltip=['preusuel', 'nombre', 'gender']
+        tooltip=[alt.Tooltip('preusuel:N', title='prenom'), alt.Tooltip(
+            'nombre:Q', title='nombre'), alt.Tooltip('gender:N', title='sexe')]
     ).properties(
         width=300,
         height=400
@@ -134,7 +137,8 @@ if not filtered_names.empty:
         y=alt.Y('preusuel:N', title='', sort=None, axis=alt.Axis(
             orient='left', labels=False, ticks=False)),
         color=alt.value('blue'),
-        tooltip=['preusuel', 'nombre', 'gender']
+        tooltip=[alt.Tooltip('preusuel:N', title='prenom'), alt.Tooltip(
+            'nombre:Q', title='nombre'), alt.Tooltip('gender:N', title='sexe')]
     ).properties(
         width=300,
         height=400
@@ -164,7 +168,8 @@ if not filtered_names.empty:
         y=alt.Y('preusuel:N', title='', sort=None, axis=alt.Axis(
             orient='right', labels=False, ticks=False)),
         color=alt.value('pink'),
-        tooltip=['preusuel', 'nombre', 'gender']
+        tooltip=[alt.Tooltip('preusuel:N', title='prenom'), alt.Tooltip(
+            'nombre:Q', title='nombre'), alt.Tooltip('gender:N', title='sexe')]
     ).properties(
         width=300,
         height=400
@@ -228,7 +233,8 @@ if not filtered_names.empty:
         x=alt.X('annais:O', title='Année', axis=alt.Axis(format='d')),
         y=alt.Y('rank:Q', title='Rang', scale=alt.Scale(
             domain=(0, name_rank_data['rank'].max() + 1))),
-        tooltip=['annais', 'rank']
+        tooltip=[alt.Tooltip('annais:O', title='annee'),
+                 alt.Tooltip('rank:Q', title='rang')]
     ).properties(
         title=f"Popularité du prénom : '{name_selected}' au cours des années",
         width=600,
