@@ -80,7 +80,7 @@ with col2:
     st.altair_chart(chart2)
 
 # Visualization 3: Map with top names by region
-st.header('Carte du top prénoms par région')
+st.header("Carte de densité d'un prénom par région")
 
 # Add a name selector for the heatmap
 selected_name = st.selectbox('Sélectionner un prénom pour la carte de densité', names_data['preusuel'].unique())
