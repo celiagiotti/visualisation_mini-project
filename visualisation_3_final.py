@@ -19,23 +19,29 @@ sex_mapping = {1: 'Homme', 2: 'Femme'}
 names_data['sexe'] = names_data['sexe'].map(sex_mapping)
 
 # Merge names_data with departments_regions to add the region information
-names_data = names_data.merge(departments_regions, left_on='dpt', right_on='num_dep')
+names_data = names_data.merge(
+    departments_regions, left_on='dpt', right_on='num_dep')
 
 # Streamlit app
 st.title('Visualisation 3 : Baby names')
 
 # Time period selector
 years = names_data['annais'].unique()
-start_year, end_year = st.slider('Sélectionner une période', int(years.min()), int(years.max()), (int(years.min()), int(years.max())))
+start_year, end_year = st.slider('Sélectionner une période', int(
+    years.min()), int(years.max()), (int(years.min()), int(years.max())))
 
 # Filter data by selected period
-filtered_data = names_data[(names_data['annais'] >= start_year) & (names_data['annais'] <= end_year)]
+filtered_data = names_data[(names_data['annais'] >= start_year) & (
+    names_data['annais'] <= end_year)]
 
 # Calculate metrics for Visualization 1
-top_20_each_year = filtered_data.groupby(['annais', 'sexe', 'preusuel'])['nombre'].sum().reset_index()
-top_20_each_year = top_20_each_year.groupby(['annais', 'sexe']).apply(lambda x: x.nlargest(20, 'nombre')).reset_index(drop=True)
+top_20_each_year = filtered_data.groupby(['annais', 'sexe', 'preusuel'])[
+    'nombre'].sum().reset_index()
+top_20_each_year = top_20_each_year.groupby(['annais', 'sexe']).apply(
+    lambda x: x.nlargest(20, 'nombre')).reset_index(drop=True)
 
-avg_presence = top_20_each_year.groupby(['preusuel', 'sexe']).size().reset_index(name='count')
+avg_presence = top_20_each_year.groupby(
+    ['preusuel', 'sexe']).size().reset_index(name='count')
 avg_presence = avg_presence.groupby('sexe')['count'].mean().reset_index()
 avg_presence.columns = ['sexe', 'avg_years_in_top_20']
 
@@ -68,29 +74,33 @@ with col2:
 st.header('Nombre d\'années de présence dans le top 20 dans la période sélectionnée')
 
 # Count the number of times each name appears in the top 20 during the selected period
-top_names_presence = top_20_each_year.groupby(['preusuel', 'sexe']).size().reset_index(name='count')
-top_names_presence = top_names_presence.sort_values('count', ascending=False).groupby('sexe').head(10)
+top_names_presence = top_20_each_year.groupby(
+    ['preusuel', 'sexe']).size().reset_index(name='count')
+top_names_presence = top_names_presence.sort_values(
+    'count', ascending=False).groupby('sexe').head(10)
 
 # Average presence bar data
 avg_presence_bars = avg_presence.copy()
-avg_presence_bars['preusuel'] = avg_presence_bars['sexe'].apply(lambda x: 'MOYENNE ' + x)
+avg_presence_bars['preusuel'] = avg_presence_bars['sexe'].apply(
+    lambda x: 'MOYENNE ' + x)
 avg_presence_bars['count'] = avg_presence_bars['avg_years_in_top_20']
 
 # Combine top names presence with avg presence bars
-combined_presence = pd.concat([top_names_presence, avg_presence_bars[['preusuel', 'sexe', 'count']]])
+combined_presence = pd.concat(
+    [top_names_presence, avg_presence_bars[['preusuel', 'sexe', 'count']]])
 
 chart2 = alt.Chart(combined_presence).mark_bar().encode(
     x=alt.X('count:Q', title='Années de présence dans le top 20'),
     y=alt.Y('preusuel:N', sort='-x', title='Prénoms'),
-    color=alt.Color('sexe:N', scale=alt.Scale(domain=['Homme', 'Femme'], range=['blue', 'pink'])),
+    color=alt.Color('sexe:N', scale=alt.Scale(
+        domain=['Homme', 'Femme'], range=['blue', 'pink'])),
     tooltip=['preusuel', 'count']
 ).properties(
-    width=600,
-    height=400
+    width=800,
+    height=600
 )
 
 st.altair_chart(chart2)
-
 
 
 # Visualization 3: Scatter plot
@@ -98,21 +108,30 @@ st.header('Nuage de points des prénoms dans le top 20 dans la période sélecti
 
 # Filter scatter data to only include top 20 names from Visualization 2
 top_names = top_names_presence['preusuel'].unique()
-filtered_top_names_data = filtered_data[filtered_data['preusuel'].isin(top_names)]
+filtered_top_names_data = filtered_data[filtered_data['preusuel'].isin(
+    top_names)]
 
 # Calculate metrics for scatter plot
-avg_year = filtered_top_names_data.groupby(['preusuel', 'sexe'])['annais'].mean().reset_index()
-total_births = filtered_top_names_data.groupby(['preusuel', 'sexe'])['nombre'].sum().reset_index()
-top_20_avg_presence = top_20_each_year.groupby(['preusuel', 'sexe'])['annais'].size().reset_index(name='avg_years_in_top_20')
+avg_year = filtered_top_names_data.groupby(['preusuel', 'sexe'])[
+    'annais'].mean().reset_index()
+total_births = filtered_top_names_data.groupby(['preusuel', 'sexe'])[
+    'nombre'].sum().reset_index()
+top_20_avg_presence = top_20_each_year.groupby(['preusuel', 'sexe'])[
+    'annais'].size().reset_index(name='avg_years_in_top_20')
 
 scatter_data = pd.merge(avg_year, total_births, on=['preusuel', 'sexe'])
-scatter_data = scatter_data.merge(top_20_avg_presence, on=['preusuel', 'sexe'], how='left')
+scatter_data = scatter_data.merge(
+    top_20_avg_presence, on=['preusuel', 'sexe'], how='left')
 
 chart3 = alt.Chart(scatter_data).mark_circle().encode(
-    x=alt.X('annais:Q', title='Année moyenne à laquelle un prénom est donné', scale=alt.Scale(domain=[start_year, end_year]), axis=alt.Axis(format='d')),
-    y=alt.Y('avg_years_in_top_20:Q', title='Nombre d\'années moyen dans le top 20'),
-    size=alt.Size('nombre:Q', title='Nombre total de naissances', scale=alt.Scale(range=[100, 2000])),
-    color=alt.Color('sexe:N', scale=alt.Scale(domain=['Homme', 'Femme'], range=['blue', 'pink'])),
+    x=alt.X('annais:Q', title='Année moyenne à laquelle un prénom est donné',
+            scale=alt.Scale(domain=[start_year, end_year]), axis=alt.Axis(format='d')),
+    y=alt.Y('avg_years_in_top_20:Q',
+            title='Nombre d\'années moyen dans le top 20'),
+    size=alt.Size('nombre:Q', title='Nombre total de naissances',
+                  scale=alt.Scale(range=[100, 2000])),
+    color=alt.Color('sexe:N', scale=alt.Scale(
+        domain=['Homme', 'Femme'], range=['blue', 'pink'])),
     tooltip=[
         alt.Tooltip('preusuel:N', title='Prénom'),
         alt.Tooltip('annais:Q', title='Année moyenne'),
@@ -120,8 +139,8 @@ chart3 = alt.Chart(scatter_data).mark_circle().encode(
         alt.Tooltip('nombre:Q', title='Nombre de naissances')
     ]
 ).properties(
-    width=600,
-    height=400
+    width=800,
+    height=600
 ).interactive()
 
 # Customize legend to ensure visibility on dark background
@@ -137,4 +156,3 @@ chart3 = chart3.configure_legend(
 )
 
 st.altair_chart(chart3)
-
