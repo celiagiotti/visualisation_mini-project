@@ -10,12 +10,17 @@ This is the repository for the "Baby Names" mini project.
 
 To do this project, we used Python and coded our visualisations with Altair (https://altair-viz.github.io). Then, to create a more ergonomic and attractive user interface, we used Streamlit (https://streamlit.io). 
 
-**In this repository you will find several files of code:**
+**In this repository you will find several files of code, the last version of the project with our refined solution is in this files:**
+- visualisation_1_final.py
+- visualisation_2_final.py
+- visualisation_3_final.py
+
+This 3 files contain all the code for all the visualisations required for the project.
+
+**You also have the first version of the project in this files:**
 - visualisation_1.py
 - visualisation_2.py
 - visualisation_3.py
-
-This 3 files contain all the code for all the visualisations required for the project.
 
 **You have a folder named "data" with different files which are data files:**
 - departements-avec-outre-mer.geojson
@@ -28,8 +33,8 @@ To view the various visualisations, you will need to create an environment that 
 **Here are the different steps:**  
 - Recover the entire Git repository
 - Install all the necessary libraries in a specific environment using requirements.txt
-- Run in the terminal **"python3 visualisation_1.py" or "python3 visualisation_2.py" or "python3 visualisation_3.py"**
-- A command message will be sent to the terminal for viewing with Streamlit, so run in the terminal: **"streamlit run visualisation_1.py" or "streamlit run visualisation_2.py" or "streamlit run visualisation_3.py"** (A web page with the graphs will open: then it's your turn to play!)
+- Run in the terminal **"python3 visualisation_1_final.py" or "python3 visualisation_2_final.py" or "python3 visualisation_3_final.py"**
+- A command message will be sent to the terminal for viewing with Streamlit, so run in the terminal: **"streamlit run visualisation_1_final.py" or "streamlit run visualisation_2_final.py" or "streamlit run visualisation_3_final.py"** (A web page with the graphs will open: then it's your turn to play!)
 
 
 **Just to remind you, here are the objectives and guidelines for the mini-projects:** 
