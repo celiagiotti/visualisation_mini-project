@@ -47,8 +47,8 @@ top_names_france = top_names_france.sort_values(
     'nombre', ascending=False).groupby('sexe').head(10)
 
 chart1 = alt.Chart(top_names_france).mark_bar().encode(
-    x=alt.X('nombre:Q', title='Compte'),
-    y=alt.Y('preusuel:N', sort='-x', title='Prénoms'),
+    x=alt.X('nombre:Q', title='Compte', axis=alt.Axis(format=',d')),
+    y=alt.Y('preusuel:N', sort='-x', title='Prénom'),
     color=alt.Color('sexe:N', scale=alt.Scale(
         domain=['Homme', 'Femme'], range=['blue', 'pink'])),
     tooltip=['preusuel', 'nombre']
@@ -69,9 +69,9 @@ top_names_region = top_names_region.sort_values(
     'nombre', ascending=False).groupby('sexe').head(10)
 
 chart2 = alt.Chart(top_names_region).mark_bar().encode(
-    x=alt.X('nombre:Q', title='Compte', scale=alt.Scale(domain=[0, max(
+    x=alt.X('nombre:Q', title='Compte', axis=alt.Axis(format=',d'), scale=alt.Scale(domain=[0, max(
         top_names_france['nombre'].max()/15, top_names_region['nombre'].max())])),
-    y=alt.Y('preusuel:N', sort='-x', title='Prénoms'),
+    y=alt.Y('preusuel:N', sort='-x', title='Prénom'),
     color=alt.Color('sexe:N', scale=alt.Scale(
         domain=['Homme', 'Femme'], range=['blue', 'pink'])),
     tooltip=['preusuel', 'nombre']
@@ -81,13 +81,29 @@ chart2 = alt.Chart(top_names_region).mark_bar().encode(
     title=f'Top 20 - {selected_region}'
 )
 
-col1, col2 = st.columns([4, 1])
+# Apply custom CSS to adjust margins
+st.markdown(
+    """
+    <style>
+    .marks {  /* class of main container */
+        margin-left: -500px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Adjust the spacing between the two charts
+chart_combined = alt.hconcat(chart1, chart2).resolve_scale(x='independent')
+
+# Create a layout with Streamlit columns
+col1, col2 = st.columns([1, 10])
 
 with col1:
-    st.altair_chart(chart1)
+    st.write("")  # Empty column for spacing
 
 with col2:
-    st.altair_chart(chart2)
+    st.altair_chart(chart_combined, use_container_width=True)
 
 # Visualization 3: Map with top names by region
 st.header("Carte de densité d'un prénom par région")
@@ -124,14 +140,12 @@ min_density = regions_geo['density'].min()
 max_density = regions_geo['density'].max()
 colormap = branca.colormap.linear.RdYlBu_09.scale(min_density, max_density)
 
-
 def style_function(feature):
     density = feature['properties'].get('density', 0)
     return {
         'fillColor': colormap(density),
-        'color': 'blue',
-        'weight': 2,
-        'dashArray': '5, 5',
+        'color': 'gray',
+        'weight': 1,
         'fillOpacity': 0.6,
     }
 
@@ -140,22 +154,20 @@ def highlight_function(feature):
     return {
         'fillColor': 'yellow',
         'color': 'yellow',
-        'weight': 2,
-        'dashArray': '5, 5',
+        'weight': 1,
         'fillOpacity': 0.6,
     }
 
 
 def popup_html(row):
     region = row['region_name']
-    male_name = row.get('Homme', 'N/A')
-    female_name = row.get('Femme', 'N/A')
     density = row.get('density', 'N/A')
     return f"<strong>{region}</strong><br>Densité du prénom {selected_name}: {density:.4f}"
 
 
 # Create a folium map centered on France
-m = folium.Map(location=[46.603354, 1.888334], zoom_start=5)
+m = folium.Map(location=[46.603354, 1.888334], zoom_start=5, tiles=None)
+folium.TileLayer('cartodbpositron').add_to(m)
 
 # Add GeoJSON data to the map with style and popups for density
 for _, row in regions_geo.iterrows():
