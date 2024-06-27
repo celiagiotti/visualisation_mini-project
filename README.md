@@ -31,14 +31,6 @@ To view the various visualisations, you will need to create an environment that 
 - Run in the terminal **"python3 visualisation_1.py" or "python3 visualisation_2.py" or "python3 visualisation_3.py"**
 - A command message will be sent to the terminal for viewing with Streamlit, so run in the terminal: **"streamlit run visualisation_1.py" or "streamlit run visualisation_2.py" or "streamlit run visualisation_3.py"** (A web page with the graphs will open: then it's your turn to play!)
 
-**Important (especially for visualisation 1):**
-- To get the best possible view when you're viewing with Streamlit, when you're on the page in the top right-hand corner you'll see 3 little points, click on them and then click on **"Settings"**. A small page will open and in the **"Appearance"** section click on **"Wide mode"**. This will allow you to see all the graphics correctly.
-If you automatically have a white background, remember to select **"Dark"** in the **"Choose app theme, colors and fonts"** section. We've programmed the text to be white, so it will look better with a black background. 
-Here's a screenshot to help you:
-
-<p align="center">
-  <img width="236" alt="Capture d’écran 2024-06-21 à 10 53 50" src="https://github.com/celiagiotti/visualisation_mini-project/assets/144688454/05636e5a-e5fa-4411-af24-7cb8968b4b6e">
-</p>
 
 **Just to remind you, here are the objectives and guidelines for the mini-projects:** 
 
