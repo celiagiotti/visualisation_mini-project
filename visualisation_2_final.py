@@ -1,3 +1,5 @@
+# Visualization 2
+
 import streamlit as st
 import pandas as pd
 import geopandas as gpd
@@ -139,6 +141,7 @@ regions_geo['density'] = regions_geo['density'].fillna(
 min_density = regions_geo['density'].min()
 max_density = regions_geo['density'].max()
 colormap = branca.colormap.linear.RdYlBu_09.scale(min_density, max_density)
+
 
 def style_function(feature):
     density = feature['properties'].get('density', 0)
