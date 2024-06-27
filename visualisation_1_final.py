@@ -187,7 +187,7 @@ if not filtered_names.empty:
             x=alt.X('annais:O', title='Année', axis=alt.Axis(format='d')),
             y=alt.Y('rank:Q', title='Rang', scale=alt.Scale(
                 domain=(0, name_rank_data['rank'].max() + 1))),
-            color='preusuel:N',
+            color=alt.Color('preusuel:N', title='Prénom'),
             tooltip=[alt.Tooltip('annais:O', title='annee'),
                      alt.Tooltip('rank:Q', title='rang')]
         ).properties(
